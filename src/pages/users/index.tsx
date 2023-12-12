@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Users() {
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ export default function Users() {
       });
       if (response) {
         const data = await response.json();
-        console.log(data);
+        console.log("loading", data);
       }
     } catch (error) {
       console.error(error);

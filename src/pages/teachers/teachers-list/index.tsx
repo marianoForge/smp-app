@@ -62,17 +62,18 @@ const TeachersTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {teachers.map((teacher) => (
-              <TableRow key={teacher._id}>
-                <TableCell>{teacher.name}</TableCell>
-                <TableCell>{teacher.email}</TableCell>
-                <TableCell>{teacher.phone}</TableCell>
-                <TableCell>{getSubjectNames(teacher.subjects)}</TableCell>
-                <TableCell>
-                  {new Date(teacher.timestamp).toLocaleString()}
-                </TableCell>
-              </TableRow>
-            ))}
+            {teachers.length > 0 &&
+              teachers.map((teacher) => (
+                <TableRow key={teacher._id}>
+                  <TableCell>{teacher.name}</TableCell>
+                  <TableCell>{teacher.email}</TableCell>
+                  <TableCell>{teacher.phone}</TableCell>
+                  <TableCell>{getSubjectNames(teacher.subjects)}</TableCell>
+                  <TableCell>
+                    {new Date(teacher.timestamp).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

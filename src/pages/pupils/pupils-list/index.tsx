@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import {
   Table,
   TableBody,
@@ -34,6 +35,7 @@ interface Pupil {
 
 const PupilsTable = () => {
   const [pupils, setPupils] = useState<Pupil[]>([]);
+  const { status } = useSession();
 
   useEffect(() => {
     const fetchPupils = async () => {
@@ -70,24 +72,27 @@ const PupilsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {pupils.map((pupil) => (
-              <TableRow key={pupil._id}>
-                <TableCell>{pupil.name}</TableCell>
-                <TableCell>{pupil.email}</TableCell>
-                <TableCell>
-                  {pupil.dob ? new Date(pupil.dob).toLocaleDateString() : "N/A"}
-                </TableCell>
-                <TableCell>{pupil.age}</TableCell>
-                <TableCell>{pupil.phone}</TableCell>
-                <TableCell>{pupil.tutor}</TableCell>
-                <TableCell>{pupil.tutorContact}</TableCell>
-                <TableCell>{getSubjectNames(pupil.subjects)}</TableCell>
+            {pupils.length > 0 &&
+              pupils.map((pupil) => (
+                <TableRow key={pupil._id}>
+                  <TableCell>{pupil.name}</TableCell>
+                  <TableCell>{pupil.email}</TableCell>
+                  <TableCell>
+                    {pupil.dob
+                      ? new Date(pupil.dob).toLocaleDateString()
+                      : "N/A"}
+                  </TableCell>
+                  <TableCell>{pupil.age}</TableCell>
+                  <TableCell>{pupil.phone}</TableCell>
+                  <TableCell>{pupil.tutor}</TableCell>
+                  <TableCell>{pupil.tutorContact}</TableCell>
+                  <TableCell>{getSubjectNames(pupil.subjects)}</TableCell>
 
-                <TableCell>
-                  {new Date(pupil.timestamp).toLocaleString()}
-                </TableCell>
-              </TableRow>
-            ))}
+                  <TableCell>
+                    {new Date(pupil.timestamp).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

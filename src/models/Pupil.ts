@@ -1,7 +1,7 @@
 import { Schema, model, models, connect } from "mongoose";
 import { ObjectId } from "mongodb";
 
-interface Pupil {
+interface PupilType {
   name: string;
   email: string;
   dob?: Date;
@@ -14,7 +14,7 @@ interface Pupil {
   timestamp: Date;
 }
 
-const PupilSchema = new Schema<Pupil>({
+const PupilSchema = new Schema<PupilType>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   dob: { type: Date },
@@ -27,7 +27,7 @@ const PupilSchema = new Schema<Pupil>({
   timestamp: { type: Date, default: Date.now },
 });
 
-const Pupil = models.Pupil || model<Pupil>("Pupil", PupilSchema);
+const Pupil = models.Pupil || model<PupilType>("Pupil", PupilSchema);
 
 // run().catch((err) => console.log(err));
 

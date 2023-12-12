@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import Pupil from "@/models/Pupil";
 import { connectMongoDB } from "@/libs/mongodb";
 import { Types } from "mongoose"; // Import Mongoose Types
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 type PostResponseData = {
   message: string;
@@ -17,6 +19,11 @@ export default async function handler(
   res: NextApiResponse<Pupil[] | PostResponseData | ErrorResponse>
 ) {
   await connectMongoDB();
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
   if (req.method === "GET") {
     try {

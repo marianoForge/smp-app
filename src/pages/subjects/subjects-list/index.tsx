@@ -81,24 +81,25 @@ const SubjectsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {subjects.map((subject) => (
-              <TableRow key={subject._id}>
-                <TableCell>{subject.name}</TableCell>
-                <TableCell>{subject.description}</TableCell>
-                <TableCell>
-                  <LinkButton
-                    component="button"
-                    onClick={() => handleOpenDialog(subject.teachersAssigned)}
-                  >
-                    {subject.teachersAssigned.length} Teachers
-                  </LinkButton>
-                </TableCell>
-                <TableCell>{subject.pupilsAssigned.length}</TableCell>
-                <TableCell>
-                  {new Date(subject.timestamp).toLocaleString()}
-                </TableCell>
-              </TableRow>
-            ))}
+            {subjects.length > 0 &&
+              subjects.map((subject) => (
+                <TableRow key={subject._id}>
+                  <TableCell>{subject.name}</TableCell>
+                  <TableCell>{subject.description}</TableCell>
+                  <TableCell>
+                    <LinkButton
+                      component="button"
+                      onClick={() => handleOpenDialog(subject.teachersAssigned)}
+                    >
+                      {subject.teachersAssigned.length} Teachers
+                    </LinkButton>
+                  </TableCell>
+                  <TableCell>{subject.pupilsAssigned.length}</TableCell>
+                  <TableCell>
+                    {new Date(subject.timestamp).toLocaleString()}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
         <Dialog open={openDialog} onClose={handleCloseDialog}>

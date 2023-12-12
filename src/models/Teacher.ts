@@ -1,7 +1,7 @@
 import { Schema, model, models, connect } from "mongoose";
 import { ObjectId } from "mongodb";
 
-interface Teacher {
+interface TeacherType {
   name: string;
   email: string;
   phone?: string;
@@ -9,7 +9,7 @@ interface Teacher {
   timestamp: Date;
 }
 
-const TeacherSchema = new Schema<Teacher>({
+const TeacherSchema = new Schema<TeacherType>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   phone: { type: String },
@@ -17,6 +17,6 @@ const TeacherSchema = new Schema<Teacher>({
   timestamp: { type: Date, default: Date.now },
 });
 
-const Teacher = models.Teacher || model<Teacher>("Teacher", TeacherSchema);
+const Teacher = models.Teacher || model<TeacherType>("Teacher", TeacherSchema);
 
 export default Teacher;

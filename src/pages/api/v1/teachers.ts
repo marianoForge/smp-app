@@ -1,5 +1,5 @@
-// File: /pages/api/teachers.ts (or similar path according to your project structure)
-
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Teacher from "@/models/Teacher";
 import { connectMongoDB } from "@/libs/mongodb";
@@ -19,6 +19,11 @@ export default async function handler(
   res: NextApiResponse<Teacher[] | PostResponseData | ErrorResponse>
 ) {
   await connectMongoDB();
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
   if (req.method === "GET") {
     try {

@@ -1,7 +1,7 @@
-import { Schema, model, models, connect } from "mongoose";
+import { Schema, model, models } from "mongoose";
 import { ObjectId } from "mongodb";
 
-interface Subject {
+interface SubjectType {
   name: string;
   description: string;
   teachersAssigned?: ObjectId[];
@@ -9,14 +9,14 @@ interface Subject {
   timestamp: Date;
 }
 
-const SubjectSchema = new Schema<Subject>({
+const SubjectSchema = new Schema<SubjectType>({
   name: { type: String, required: true },
   description: { type: String, required: true },
-  teachersAssigned: [{ type: Schema.Types.ObjectId, ref: "Teacher" }],
-  pupilsAssigned: [{ type: Schema.Types.ObjectId, ref: "Pupil" }],
+  teachersAssigned: [{ type: ObjectId, ref: "Teacher" }],
+  pupilsAssigned: [{ type: ObjectId, ref: "Pupil" }],
   timestamp: { type: Date, default: Date.now },
 });
 
-const Subject = models.Subject || model<Subject>("Subject", SubjectSchema);
+const Subject = models.Subject || model<SubjectType>("Subject", SubjectSchema);
 
 export default Subject;

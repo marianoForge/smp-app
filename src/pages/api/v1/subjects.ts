@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { connectMongoDB } from "@/libs/mongodb";
 import Subject from "@/models/Subject";
 
@@ -17,6 +18,11 @@ export default async function handler(
   res: NextApiResponse<Subject[] | PostResponseData | ErrorResponse>
 ) {
   await connectMongoDB();
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
   if (req.method === "GET") {
     try {
